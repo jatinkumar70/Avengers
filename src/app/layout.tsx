@@ -1,15 +1,43 @@
 import type { Metadata, Viewport } from "next";
-import { Anton, Bangers, Inter_Tight, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { ExperienceProvider } from "@/components/providers/Experience";
 import { Preloader } from "@/components/Preloader";
 import { Cursor } from "@/components/ui/Cursor";
 import { EasterEggs } from "@/components/EasterEggs";
 
-const anton = Anton({ subsets: ["latin"], weight: "400", variable: "--font-anton", display: "swap" });
-const inter = Inter_Tight({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
-const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-mono-jb", display: "swap" });
-const bangers = Bangers({ subsets: ["latin"], weight: "400", variable: "--font-bangers", display: "swap" });
+/**
+ * Fonts are self-hosted (latin subsets from Fontsource, SIL OFL — see ./fonts)
+ * so builds never depend on reaching Google Fonts. next/font/google under
+ * Turbopack fails with "Can't resolve '@vercel/turbopack-next/internal/font/google/font'"
+ * whenever that fetch fails.
+ */
+const anton = localFont({
+  src: "./fonts/anton-latin-400-normal.woff2",
+  weight: "400",
+  variable: "--font-anton",
+  display: "swap",
+});
+const inter = localFont({
+  src: "./fonts/inter-tight-latin-wght-normal.woff2",
+  weight: "100 900",
+  variable: "--font-inter",
+  display: "swap",
+});
+const mono = localFont({
+  src: [
+    { path: "./fonts/jetbrains-mono-latin-400-normal.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/jetbrains-mono-latin-500-normal.woff2", weight: "500", style: "normal" },
+  ],
+  variable: "--font-mono-jb",
+  display: "swap",
+});
+const bangers = localFont({
+  src: "./fonts/bangers-latin-400-normal.woff2",
+  weight: "400",
+  variable: "--font-bangers",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Assemble — An Interactive Avengers Archive",
